@@ -1,12 +1,22 @@
 import 'dotenv/config'
-import exp from 'express'
-import NoteModel from './models/note'
+import exp, { NextFunction, Request, Response } from 'express'
+import noteRoutes from './routes/notes'
 
 const app = exp()
 
-app.get("/", async (req, res) => { 
-    const notes = await NoteModel.find().exec() //Waits for notes from notemodel
-    res.status(200).json(notes) //Return notes to user
+app.use(exp.json())
+
+app.use("/api/notes", noteRoutes) //This will set our URL (api/notes = INPUT)
+
+app.use((req, res, next) => {
+    next(Error('Endpoint not found'))
+})
+
+app.use((error: unknown, req: Request, res: Response, next: NextFunction) => { 
+    console.error(error)
+    let emsg = 'An unknown error has occurred'
+    if (error instanceof Error) emsg = error.message
+    res.status(500).json({error: emsg})
 })
 
 export default app
