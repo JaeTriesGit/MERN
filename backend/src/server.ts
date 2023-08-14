@@ -7,7 +7,7 @@ const port = env.PORT //Gets the port from envVal
 mong.connect(env.Mongo_Connection) //Tries to establish a connection
     .then(() => { //Runs after/if connection is established
         console.log('Mongoose connected')
-        app.listen(port, () => {
+        app.listen(port, () => { //Starts listening to port
             console.log('Listening to port: '+port)
         })
     })

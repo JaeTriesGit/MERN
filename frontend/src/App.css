@@ -1,0 +1,113 @@
+*{
+  margin:0;
+  padding:0;
+  color:white;
+  background-color:rgb(27, 27, 27);
+}
+
+.App{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.Notes{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+  align-items:center;
+}
+
+.Post-Input{
+  
+}
+
+.Post{
+}
+
+.Note{
+  width:300px;
+  height:auto;
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  background-color:rgb(31, 31, 31);
+  border-radius:6px;
+  padding:5px;
+}
+
+.Title{
+  font-weight:700;
+  font-size:20px;
+  width:100%;
+  height:auto;
+}
+
+.Text{
+  font-size:16px;
+  width:100%;
+  height:auto;
+}
+
+.NoteBody{
+  width:280px;
+}
+
+.Timestamp{
+  font-size:12px;
+}
+
+.Delete{
+  width:20px;
+  height:20px;
+}
+
+.Delete:hover{
+  cursor:pointer;
+}
+
+/*Posting*/
+
+.Post{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  width:300px;
+  height:auto;
+  padding:5px;
+  background-color:rgb(36, 36, 36);
+  gap:5px;
+  border-radius:6px;
+}
+
+#CreateNote{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  background:none;
+  gap:5px;
+}
+
+.PostBtn{
+  width:100px;
+  height:30px;
+  background-color:rgb(105, 105, 185);
+  font-weight:700;
+  border-radius:6px;
+}
+
+.PostBtn:hover{
+  cursor:pointer;
+  background-color:rgb(93, 93, 167);
+}
+
+.Post-Title{
+  width:100%;
+  font-weight:700;
+}
+
+.Post-Text{
+  width:100%;
+  height:100px;
+}
