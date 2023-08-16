@@ -9,6 +9,8 @@ function App() {
 
   const [notes, setNotes] = useState<NoteModel[]>([])
 
+  const [noteEdit, setNoteEdit] = useState<NoteModel|null>(null)
+
   useEffect(() => {
     async function loadNotes(){
       try {
@@ -32,16 +34,25 @@ function App() {
     }
   }
 
+
+
   return (
-    <div className="App">
-      <Post/>
+    <div className="Main">
+      <Post noteSaved={(res) => {setNotes([...notes, res])}}/>
       <div className='Notes'>
         {notes.map(note => (
-          <NoteComp note={note} Delete={Delete} key={note._id}/>
+          <NoteComp 
+            noteClicked={setNoteEdit} 
+            note={note} 
+            Delete={Delete} 
+            key={note._id}
+          />
         ))}
       </div>
     </div>
   );
 }
+
+//<Post/>
 
 export default App;

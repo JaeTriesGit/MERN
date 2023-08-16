@@ -1,13 +1,17 @@
 import { Note as noteModel} from '../models/note'
-import DeleteImg from '../images/cross.svg'
+import DeleteImg from '../images/delete.svg'
+import Pen from '../images/pen.svg'
+import { format } from '../util/format'
+
 
 interface NoteProperties {
     note: noteModel,
+    noteClicked: (note: noteModel) => void,
     Delete: (note: noteModel) => void,
     className?: string
 }
 
-export default function NoteComp({ note, Delete, className }: NoteProperties){
+export default function NoteComp({ note, noteClicked, Delete, className }: NoteProperties){
 
     const {
         title,
@@ -17,13 +21,18 @@ export default function NoteComp({ note, Delete, className }: NoteProperties){
     } = note
 
     return(
-        <div className='Note'>
-            <div className='NoteBody'>
-                <p className='Title'>{note.title}</p>
-                <p className='Text'>{note.text}</p>
-                <p className='Timestamp'>Created at: {note.createdAt}</p>
+        <div className='Post'>
+            <div className='Controls'>
+                <p className='Post-Title'>{note.title}</p>
+                <div className='Ctrl'>
+                    <img className='Edit' onClick={() => noteClicked(note)} src={Pen}/>
+                    <img className='Delete' onClick={() => Delete(note)} src={DeleteImg}/>
+                </div>
             </div>
-            <img className='Delete' src={DeleteImg} alt='Delete' onClick={() => Delete(note)}/>
+            <p className='Post-Text'>{note.text}</p>
+            <p className='Post-Date'>Created at: {format(note.createdAt)}</p> 
         </div>
     )
 }
+
+//note. createdAt, updatedAt, text, title
