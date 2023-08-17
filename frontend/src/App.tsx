@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import { Note as NoteModel } from './models/note'
+
 import NoteComp from './components/note'
 import Post from './components/post'
+import SignUp from './components/signup'
+import Navbar from './components/navbar'
+
 import * as NotesApi from './network/notes_api'
 
 function App() {
@@ -38,7 +42,10 @@ function App() {
 
   return (
     <div className="Main">
+      <Navbar/>
+      <SignUp onDismiss={() => {}} onSuccess={() => {}}/>
       <Post noteSaved={(res) => {setNotes([...notes, res])}}/>
+
       <div className='Notes'>
         {notes.map(note => (
           <NoteComp 
@@ -49,6 +56,7 @@ function App() {
           />
         ))}
       </div>
+
     </div>
   );
 }

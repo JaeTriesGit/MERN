@@ -1,5 +1,6 @@
 $BaseBG:rgb(27, 27, 27);
 $SecoBG:rgb(17, 17, 17);
+$ButtonBG:rgb(61, 61, 61);
 
 *{
     margin:0;
@@ -131,4 +132,31 @@ $SecoBG:rgb(17, 17, 17);
         filter: invert(68%) sepia(59%) saturate(621%) hue-rotate(167deg) brightness(99%) contrast(91%);
         cursor:pointer;
     }
+}
+
+.UserForm{
+    display:flex;
+    flex-direction:column;
+    width:300px;
+    height:auto;
+    gap:15px;
+    padding:5px;
+    background-color:$BaseBG;
+    border-radius:6px;
+}
+
+.Text-Field{
+    font-size:15px;
+    border-radius:6px;
+}
+
+.Submit-Button{
+    color:white;
+    background-color:$ButtonBG;
+}
+
+.Navbar{
+    background-color:$SecoBG;
+    width:100vw;
+    height:40px;
 }

@@ -19,7 +19,7 @@ app.use(session({ //Session setup
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge: 5000
+        maxAge: 3600000
     },
     rolling: true,
     store: MongoStore.create({
@@ -27,9 +27,9 @@ app.use(session({ //Session setup
     })
 }))
 
-app.use("/api/notes", noteRoutes) //Connecting our route
-
-app.use('/api/signup', userRoutes) 
+app.use("/api/notes", noteRoutes) //Connecting our notes route
+//app.use("ROUTE-URL", ConnectTo)
+app.use('/api/users', userRoutes) //Connecting our users route
 
 app.use((req, res, next) => {
     next(createHttpError(404, 'Endpoint not found'))
