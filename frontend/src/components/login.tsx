@@ -24,7 +24,7 @@ const Login = ({onDismiss, onSuccess}:LoginBody) => {
         <form id='LoginForm' className='UserForm' action='/api/users' method='post' onSubmit={handleSubmit(Submit)}>
             <input className='Text-Field' type='text' {...register('username')} placeholder='Enter Username'/>
             <input className='Text-Field' {...register('password')} placeholder='Enter Password' type='password'/>
-            <button className='Submit-Button' form='LoginForm' type='submit' />
+            <button className='Submit-Button' form='LoginForm' type='submit'>Log In</button>
         </form>
     )
 }

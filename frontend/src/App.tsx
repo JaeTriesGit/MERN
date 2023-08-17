@@ -6,6 +6,7 @@ import NoteComp from './components/note'
 import Post from './components/post'
 import SignUp from './components/signup'
 import Navbar from './components/navbar'
+import Login from './components/login'
 
 import * as NotesApi from './network/notes_api'
 
@@ -43,6 +44,7 @@ function App() {
   return (
     <div className="Main">
       <Navbar/>
+      <Login onDismiss={() => {}} onSuccess={() => {}}/>
       <SignUp onDismiss={() => {}} onSuccess={() => {}}/>
       <Post noteSaved={(res) => {setNotes([...notes, res])}}/>
 
