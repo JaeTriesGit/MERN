@@ -173,6 +173,8 @@
   height: 100%;
   background: none;
   align-content: center;
+  justify-content: center;
+  align-items: center;
 }
 
 #Username {
