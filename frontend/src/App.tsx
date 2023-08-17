@@ -1,64 +1,44 @@
 import React, { useEffect, useState } from 'react';
+import * as NotesApi from './network/notes_api'
 import './App.css';
-import { Note as NoteModel } from './models/note'
-
-import NoteComp from './components/note'
-import Post from './components/post'
 import SignUp from './components/signup'
 import Navbar from './components/navbar'
 import Login from './components/login'
-
-import * as NotesApi from './network/notes_api'
+import {User} from './models/user'
+import NotesLogged from './components/NotesLogged'
+import NotesOut from './components/NotesOut'
 
 function App() {
 
-  const [notes, setNotes] = useState<NoteModel[]>([])
+  const [loggedUser, setLoggedUser] = useState<User|null>(null)
 
-  const [noteEdit, setNoteEdit] = useState<NoteModel|null>(null)
+  const [showSign, setShowSign] = useState(false)
+
+  const [showLogin, setShowLogin] = useState(false)
 
   useEffect(() => {
-    async function loadNotes(){
-      try {
-        const notes = await NotesApi.fetchNotes()
-        setNotes(notes)
-      } catch (error) {
+    async function fetchUser(){
+      try{
+        const CurrentUser = await NotesApi.getCurrentUser()
+        setLoggedUser(CurrentUser)
+      } catch(error){
         console.error(error)
-        alert(error)
       }
     }
-    loadNotes()
-  }, [])
-
-  async function Delete(note: NoteModel){ //Should delete through delete endpoint
-    try{
-      await NotesApi.deleteNote(note._id)
-      setNotes(notes.filter(aNote => aNote._id !== note._id))
-    } catch (error) {
-      console.error(error)
-      alert(error)
-    }
-  }
-
-
+    fetchUser()
+  })
 
   return (
     <div className="Main">
-      <Navbar/>
-      <Login onDismiss={() => {}} onSuccess={() => {}}/>
-      <SignUp onDismiss={() => {}} onSuccess={() => {}}/>
-      <Post noteSaved={(res) => {setNotes([...notes, res])}}/>
-
-      <div className='Notes'>
-        {notes.map(note => (
-          <NoteComp 
-            noteClicked={setNoteEdit} 
-            note={note} 
-            Delete={Delete} 
-            key={note._id}
-          />
-        ))}
-      </div>
-
+      <Navbar 
+        LoggedUser={loggedUser} 
+        onSignUpClicked={() => {setShowSign(true); setShowLogin(false)}} 
+        onLogInClicked={() => {setShowLogin(true); setShowSign(false)}} 
+        onSignOut={() => setLoggedUser(null)} 
+      />
+      {showLogin && !loggedUser && <Login onDismiss={() => setShowSign(false)} onSuccess={(user) => {setLoggedUser(user); setShowSign(false)}}/> }
+      {showSign && !loggedUser && <SignUp onDismiss={() => setShowLogin(false)} onSuccess={(user) => {setLoggedUser(user); setShowLogin(false)}}/> }
+      {loggedUser ? <NotesLogged/> : <NotesOut/>}
     </div>
   );
 }

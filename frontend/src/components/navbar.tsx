@@ -1,16 +1,23 @@
 import { User } from '../models/user'
+import NavbarLogged from './navbarlogged'
+import NavbarLoggedOut from './navbarloggedout'
 
 interface Navprops{
-
+    LoggedUser: User | null,
+    onSignUpClicked: () => void,
+    onLogInClicked: () => void,
+    onSignOut: () => void
 }
 
-const Navbar = () => {
+const Navbar = ({LoggedUser, onSignUpClicked, onLogInClicked, onSignOut} : Navprops) => {
+
     return(
         <div className='Navbar'>
-            <div className='Controls'>
-                <button className='Navbutton'>Sign Up</button>
-                <button className='Navbutton'>Log In</button>
-            </div>
+            <p className='NavbarTitle'>Epic Notes</p>
+            {LoggedUser ? 
+            <NavbarLogged user={LoggedUser} onLogout={onSignOut}/>
+            :
+            <NavbarLoggedOut onSignUp={onSignUpClicked} onLogIn={onLogInClicked}/>}
         </div>
     )
 }
