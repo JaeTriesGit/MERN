@@ -2,10 +2,14 @@ import { RequestHandler } from "express"
 import NoteModel from '../models/note'
 import createHttpError, { isHttpError } from 'http-errors'
 import mongoose from 'mongoose'
+import { Checker } from "../util/checker"
 
 export const getNotes: RequestHandler = async (req, res, next) => { //req(uest) res(ponse) next(function)
+    const authUser = req.session.userId
+
     try { //This runs first, or attempts to at least
-        const notes = await NoteModel.find().exec() //Waits for notes from notemodel
+        Checker(authUser)
+        const notes = await NoteModel.find({userId: authUser}).exec() //Waits for notes from notemodel
         res.status(200).json(notes) //Return notes to user
     } catch (error) { //If try doesn't work, throw out error
         next(error) //This connects to
@@ -14,14 +18,19 @@ export const getNotes: RequestHandler = async (req, res, next) => { //req(uest) 
 
 export const getNote: RequestHandler = async (req, res, next) => {
     const noteId = req.params.noteId //NOTICE: noteId has to be IDENTICAL to what it is in routes, for example. I assume it can be called anything, but keep it all the same!
+    const authUser = req.session.userId
 
     try {
+        Checker(authUser)
         if (!mongoose.isValidObjectId(noteId)) { //mongoose can check if our noteId is valid or not
             throw createHttpError(400, 'noteId is invalid')
         }
         const note = await NoteModel.findById(noteId).exec()
         if (!note) {
             throw createHttpError(404, 'Note not found!')
+        }
+        if (!note.userId.equals(authUser)) {
+            throw createHttpError(401, 'This Note is not owned by your account!')
         }
         res.status(200).json(note)
     } catch (error) {
@@ -46,13 +55,16 @@ interface CreateNoteBody {
 export const createNote: RequestHandler<unknown, unknown, CreateNoteBody, unknown> = async (req,res,next)=>{ //Create note
     const title = req.body.title
     const tx = req.body.text
+    const authUser = req.session.userId
     
     try{
+        Checker(authUser)
         if (!title) {
             throw createHttpError(400, 'Title does not exist (it is required!)')
         }
 
         const newNote = await NoteModel.create({ //This lets us create a new note
+            userId: authUser,
             title: title,
             text: tx
         })
@@ -76,7 +88,9 @@ export const updateNote: RequestHandler<UpdateNoteParams, unknown, UpdateNoteBod
     const noteId = req.params.noteId
     const newTitle = req.body.title
     const Tx = req.body.text
+    const authUser = req.session.userId
     try {
+        Checker(authUser)
         if (!mongoose.isValidObjectId(noteId)) { //mongoose can check if our noteId is valid or not
             throw createHttpError(400, 'noteId is invalid')
         }
@@ -89,6 +103,10 @@ export const updateNote: RequestHandler<UpdateNoteParams, unknown, UpdateNoteBod
 
         if (!note) {
             throw createHttpError(404, 'Original note was not found!')
+        }
+
+        if (!note.userId.equals(authUser)) {
+            throw createHttpError(401, 'This Note is not owned by your account!')
         }
 
         note.title = newTitle
@@ -104,8 +122,10 @@ export const updateNote: RequestHandler<UpdateNoteParams, unknown, UpdateNoteBod
 
 export const deleteNote: RequestHandler = async(req, res, next) => {
     const id = req.params.noteId
+    const authUser = req.session.userId
 
     try {
+        Checker(authUser)
         if (!mongoose.isValidObjectId(id)){
             throw createHttpError(400, 'noteId is invalid')
         }

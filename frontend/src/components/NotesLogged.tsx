@@ -39,7 +39,7 @@ const NotesLogged = () => {
         <Post noteSaved={(res) => {setNotes([...notes, res])}}/>
 
         <div className='Notes'>
-            {notes.map(note => (
+            {notes.length > 0 && notes.map(note => (
             <NoteComp 
                 noteClicked={setNoteEdit} 
                 note={note} 

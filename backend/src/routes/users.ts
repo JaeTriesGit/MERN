@@ -1,9 +1,10 @@
 import express from 'express'
 import * as UsersController from '../controllers/users'
+import requireAuth from '../middleware/auth'
 
 const Router = express.Router()
-//Router.post(URL, ForwardingFunc)
-Router.get('/', UsersController.AuthenticateUser)
+//Router.post(URL, ?MIDDLEWARE, ForwardingFunc)
+Router.get('/', requireAuth, UsersController.AuthenticateUser)
 //localhost:3000/api/users
 Router.post('/signup', UsersController.signUp)
 //localhost:3000/api/users/signup

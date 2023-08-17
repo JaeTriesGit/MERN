@@ -7,6 +7,7 @@ import createHttpError, { isHttpError } from 'http-errors'
 import session from 'express-session'
 import env from './util/envVal'
 import MongoStore from 'connect-mongo'
+import requireAuth from './middleware/auth'
 
 const app = exp()
 
@@ -27,7 +28,7 @@ app.use(session({ //Session setup
     })
 }))
 
-app.use("/api/notes", noteRoutes) //Connecting our notes route
+app.use("/api/notes", requireAuth, noteRoutes) //Connecting our notes route
 //app.use("ROUTE-URL", ConnectTo)
 app.use('/api/users', userRoutes) //Connecting our users route
 
