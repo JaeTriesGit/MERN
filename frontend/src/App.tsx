@@ -14,7 +14,7 @@ function App() {
 
   const [showSign, setShowSign] = useState(false)
 
-  const [showLogin, setShowLogin] = useState(false)
+  const [showLogin, setShowLogin] = useState(true)
 
   useEffect(() => {
     async function fetchUser(){
@@ -38,7 +38,7 @@ function App() {
       />
       {showLogin && !loggedUser && <Login onDismiss={() => setShowSign(false)} onSuccess={(user) => {setLoggedUser(user); setShowSign(false)}}/> }
       {showSign && !loggedUser && <SignUp onDismiss={() => setShowLogin(false)} onSuccess={(user) => {setLoggedUser(user); setShowLogin(false)}}/> }
-      {loggedUser ? <NotesLogged/> : <NotesOut/>}
+      {loggedUser ? <NotesLogged onSuccess={()=>{console.log('hello world')}}/> : <NotesOut/>}
     </div>
   );
 }
