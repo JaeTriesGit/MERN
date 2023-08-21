@@ -64,8 +64,8 @@ const NotesLogged = ({onSuccess}:NoteBody) => {
         { noteEdit ? 
             <form id='EditForm' action={'/api/notes/'} method='patch' className='Testing' onSubmit={handleSubmit(Submit)}>
                 <p className='The-Title'>Edit Note</p>
-                <input id='Edit-Title' type='text' className='Form-Title' {...register('title')} defaultValue={noteEdit.title || ''}/>
-                <textarea id='Edit-Text' className='Form-Text' {...register('text')} defaultValue={noteEdit.text || ''}/>
+                <input id='Edit-Title' type='text' className='Form-Title' {...register('title')} defaultValue={noteEdit.title}/>
+                <textarea id='Edit-Text' className='Form-Text' {...register('text')} defaultValue={noteEdit.text}/>
                 <div className='Edit-Ctrl'>
                     <button type='submit' form='EditForm'>Complete Edit</button>
                     <button onClick={() => setNoteEdit(null)}>Cancel</button>

@@ -5,27 +5,17 @@ import * as NoteAPI from '../network/notes_api'
 import Send from '../images/send.svg'
 
 interface theNote {
-    onEdit?: Note,
     noteSaved: (note: Note) => void
 }
 
-const NewNote = ({onEdit, noteSaved}:theNote) => {
+const NewNote = ({noteSaved}:theNote) => {
 
-    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<NoteInput>({
-        defaultValues: {
-            title: onEdit?.title || '',
-            text: onEdit?.text || ''
-        }
-    })
+    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<NoteInput>({})
 
     async function submitForm(input: NoteInput){
         try{
             let noteRes: Note
-            if (onEdit) {
-                noteRes = await NoteAPI.updateNote(onEdit._id, input)
-            } else {
-                noteRes = await NoteAPI.addNote(input)
-            }
+            noteRes = await NoteAPI.addNote(input)
             noteSaved(noteRes)
         } catch(error){
             console.error(error)
