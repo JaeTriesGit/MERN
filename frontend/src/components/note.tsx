@@ -31,6 +31,7 @@ export default function NoteComp({ note, noteClicked, Delete, className }: NoteP
             </div>
             <p className='Post-Text'>{note.text}</p>
             <p className='Post-Date'>Created at: {format(note.createdAt)}</p> 
+            <p className='Post-Date'>Updated at: {format(note.updatedAt)}</p>
         </div>
     )
 }

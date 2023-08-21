@@ -35,6 +35,7 @@ const NewNote = ({onEdit, noteSaved}:theNote) => {
 
     return(
         <form id='theForm' action='/api/notes' method='post' onSubmit={handleSubmit(submitForm)}>
+            <p className='The-Title'>Create a New Note</p>
             <input id='FormTitle' type='text' {...register('title')} placeholder='Enter Title'/>
             <textarea id='FormText' {...register('text')} placeholder='Enter Text'/>
             <input id='FormButton' form='theForm' src={Send} type='image'/>

@@ -23,7 +23,7 @@ const SignUp = ({onDismiss, onSuccess}:SignUpBody) => {
     return(
         <form id='SignUpForm' className='UserForm' action='/api/users' method='post' onSubmit={handleSubmit(Submit)}>
             <input className='Text-Field' type='text' {...register('username')} placeholder='Enter Username'/>
-            <input className='Text-Field' {...register('email')} placeholder='Enter Email'/>
+            <input className='Text-Field' type='email' {...register('email')} placeholder='Enter Email'/>
             <input className='Text-Field' {...register('password')} placeholder='Enter Password' type='password'/>
             <button className='Submit-Button' form='SignUpForm' type='submit'>Sign Up</button>
         </form>
