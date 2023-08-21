@@ -229,4 +229,10 @@
   font-weight: 700;
   width: 100%;
   align-content: center;
+}
+
+.Edit-Ctrl {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }/*# sourceMappingURL=App.css.map */

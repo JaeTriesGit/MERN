@@ -64,9 +64,12 @@ const NotesLogged = ({onSuccess}:NoteBody) => {
         { noteEdit ? 
             <form id='EditForm' action={'/api/notes/'} method='patch' className='Testing' onSubmit={handleSubmit(Submit)}>
                 <p className='The-Title'>Edit Note</p>
-                <input type='text' className='Form-Title' {...register('title')} defaultValue={noteEdit?.title}/>
-                <textarea className='Form-Text' {...register('text')} defaultValue={noteEdit?.text}/>
-                <button type='submit' form='EditForm'>Complete Edit</button>
+                <input id='Edit-Title' type='text' className='Form-Title' {...register('title')} defaultValue={noteEdit.title || ''}/>
+                <textarea id='Edit-Text' className='Form-Text' {...register('text')} defaultValue={noteEdit.text || ''}/>
+                <div className='Edit-Ctrl'>
+                    <button type='submit' form='EditForm'>Complete Edit</button>
+                    <button onClick={() => setNoteEdit(null)}>Cancel</button>
+                </div>
             </form> :
             <Post noteSaved={(res) => {setNotes([...notes, res])}}/>
         }
@@ -74,7 +77,9 @@ const NotesLogged = ({onSuccess}:NoteBody) => {
         <div className='Notes'>
             {notes.length > 0 && notes.map(note => (
             <NoteComp 
-                noteClicked={(note) => {setNoteEdit(note); window.scrollTo(0,0)}} 
+                noteClicked={(note) => {setNoteEdit(note); 
+                    window.scrollTo(0,0);
+                }} 
                 note={note} 
                 Delete={Delete} 
                 key={note._id}
