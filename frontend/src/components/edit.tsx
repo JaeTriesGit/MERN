@@ -25,11 +25,11 @@ export default function Edit({note, onCancel, noteSave}:EditBody){
 
     return(
         <form id='EditForm' action={'/api/notes/'} method='patch' className='Testing' onSubmit={handleSubmit(Submit)}>
-            <p className='The-Title'>Edit Note</p>
+            <p className='The-Title'>Editing Note...</p>
             <input id='Edit-Title' type='text' className='Form-Title' {...register('title')} defaultValue={note.title}/>
             <textarea id='Edit-Text' className='Form-Text' {...register('text')} defaultValue={note.text}/>
             <div className='Edit-Ctrl'>
-                <button type='submit' form='EditForm'>Complete Edit</button>
+                <button type='submit' form='EditForm'>Apply Edit</button>
                 <button onClick={() => onCancel(note)}>Cancel</button>
             </div>
         </form>

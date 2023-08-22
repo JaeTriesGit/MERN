@@ -45,7 +45,6 @@ $ButtonBG:rgb(61, 61, 61);
     height:30px;
     background:$SecoBG;
     border-radius:6px;
-    background:none;
 }
   
 .Delete{
@@ -213,6 +212,7 @@ $ButtonBG:rgb(61, 61, 61);
     height:auto;
     border-radius:6px;
     background-color:$BaseBG;
+    gap:5px;
 }
 
 .Form-Title{

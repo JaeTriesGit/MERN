@@ -11,11 +11,10 @@ interface Navprops{
 }
 
 const Navbar = ({LoggedUser, onSignUpClicked, onLogInClicked, onSignOut} : Navprops) => {
-
     return(
         <div className='Navbar'>
             <div className='Top-Left'>
-                <img className='Logo' src={Logo}/>
+                <img className='Logo' alt='ENL' src={Logo}/>
                 <p className='NavbarTitle'>Epic Notes</p>
             </div>
             {LoggedUser ? 

@@ -207,6 +207,7 @@
   height: auto;
   border-radius: 6px;
   background-color: rgb(27, 27, 27);
+  gap: 5px;
 }
 
 .Form-Title {

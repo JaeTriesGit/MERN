@@ -23,8 +23,8 @@ export default function NoteComp({ note, noteClicked, Delete, className, Editing
 
     return(
         <div className='Post' 
-            style={{backgroundColor: Editing ? "rgb(27, 27, 27)" : "#d49839"}}>
-            <div className='Controls' style={{backgroundColor: Editing ? "rgb(17, 17, 17)" : "#a3701f"}}>
+            style={{backgroundColor: Editing ? "rgb(27, 27, 27)" : "rgb(30, 66, 75)"}}>
+            <div className='Controls' style={{backgroundColor: Editing ? "rgb(17, 17, 17)" : "rgb(8, 46, 58)"}}>
                 <p className='Post-Title'>{note.title}</p>
                 <div className='Ctrl'>
                     <img className='Edit' onClick={() => noteClicked(note)} src={Pen}/>

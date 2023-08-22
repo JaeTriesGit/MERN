@@ -6,7 +6,7 @@ import NoteComp from './note'
 import Post from './post'
 import Edit from './edit'
 
-interface NoteBody{
+interface NoteBody{ 
     onSuccess:(note: NoteModel)=>void
 }
 
