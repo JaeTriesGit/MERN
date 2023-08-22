@@ -8,10 +8,11 @@ interface NoteProperties {
     note: noteModel,
     noteClicked: (note: noteModel) => void,
     Delete: (note: noteModel) => void,
-    className?: string
+    className?: string,
+    Editing:boolean
 }
 
-export default function NoteComp({ note, noteClicked, Delete, className }: NoteProperties){
+export default function NoteComp({ note, noteClicked, Delete, className, Editing }: NoteProperties){
 
     const {
         title,
@@ -21,8 +22,9 @@ export default function NoteComp({ note, noteClicked, Delete, className }: NoteP
     } = note
 
     return(
-        <div className='Post'>
-            <div className='Controls'>
+        <div className='Post' 
+            style={{backgroundColor: Editing ? "rgb(27, 27, 27)" : "#d49839"}}>
+            <div className='Controls' style={{backgroundColor: Editing ? "rgb(17, 17, 17)" : "#a3701f"}}>
                 <p className='Post-Title'>{note.title}</p>
                 <div className='Ctrl'>
                     <img className='Edit' onClick={() => noteClicked(note)} src={Pen}/>

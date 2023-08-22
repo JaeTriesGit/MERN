@@ -38,7 +38,7 @@ function App() {
       />
       {showLogin && !loggedUser && <Login onDismiss={() => setShowSign(false)} onSuccess={(user) => {setLoggedUser(user); setShowSign(false)}}/> }
       {showSign && !loggedUser && <SignUp onDismiss={() => setShowLogin(false)} onSuccess={(user) => {setLoggedUser(user); setShowLogin(false)}}/> }
-      {loggedUser ? <NotesLogged onSuccess={()=>{console.log('hello world')}}/> : <NotesOut/>}
+      {loggedUser ? <NotesLogged onSuccess={()=>{}}/> : <NotesOut/>}
     </div>
   );
 }

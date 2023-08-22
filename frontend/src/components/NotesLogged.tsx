@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form'
 import { Note as NoteModel } from '../models/note'
 import * as NotesApi from '../network/notes_api'
 
 import NoteComp from './note'
 import Post from './post'
+import Edit from './edit'
 
 interface NoteBody{
     onSuccess:(note: NoteModel)=>void
@@ -15,8 +15,6 @@ const NotesLogged = ({onSuccess}:NoteBody) => {
     const [notes, setNotes] = useState<NoteModel[]>([])
 
     const [noteEdit, setNoteEdit] = useState<NoteModel|null>(null)
-
-    const { register, handleSubmit, formState: {errors, isSubmitting}} = useForm<NoteModel>()
 
     useEffect(() => {
         async function loadNotes(){
@@ -44,14 +42,10 @@ const NotesLogged = ({onSuccess}:NoteBody) => {
         }
     }
 
-    async function Submit(note:NoteModel) {
-        let NoteID = noteEdit?._id || ''
+    async function Update(){
+        console.log('UpDaTe')
         try{
-            const updated = await NotesApi.updateNote(NoteID, note)
-            onSuccess(updated)
-            if (NoteID && updated) {
-                setNoteEdit(null)
-            }
+            setNoteEdit(null)
             const notes = await NotesApi.fetchNotes()
             setNotes(notes)
         } catch(error){
@@ -59,29 +53,42 @@ const NotesLogged = ({onSuccess}:NoteBody) => {
         }
     }
 
+    function GetBoolean(noteToCompare:NoteModel){
+        if (noteEdit?._id === noteToCompare._id){
+            return false
+        } else {
+            return true
+        }
+    }
+
     return(
     <>
         { noteEdit ? 
-            <form id='EditForm' action={'/api/notes/'} method='patch' className='Testing' onSubmit={handleSubmit(Submit)}>
-                <p className='The-Title'>Edit Note</p>
-                <input id='Edit-Title' type='text' className='Form-Title' {...register('title')} defaultValue={noteEdit.title}/>
-                <textarea id='Edit-Text' className='Form-Text' {...register('text')} defaultValue={noteEdit.text}/>
-                <div className='Edit-Ctrl'>
-                    <button type='submit' form='EditForm'>Complete Edit</button>
-                    <button onClick={() => setNoteEdit(null)}>Cancel</button>
-                </div>
-            </form> :
-            <Post noteSaved={(res) => {setNotes([...notes, res])}}/>
+            <Edit 
+                note={noteEdit} 
+                onCancel={()=>{setNoteEdit(null)}} 
+                noteSave={()=>{Update()}}
+            /> 
+            :
+            <Post 
+                noteSaved={(res) => {setNotes([...notes, res])}}
+            />
         }
 
         <div className='Notes'>
             {notes.length > 0 && notes.map(note => (
             <NoteComp 
-                noteClicked={(note) => {setNoteEdit(note); 
-                    window.scrollTo(0,0);
-                }} 
+                noteClicked={(note) => {
+                    if (!noteEdit){
+                        setNoteEdit(note); 
+                        window.scrollTo(0,0);
+                    } else {
+                        alert('Already editing a note!')
+                    }
+                }}
                 note={note} 
-                Delete={Delete} 
+                Delete={Delete}
+                Editing={GetBoolean(note)}
                 key={note._id}
             />
             ))}
@@ -94,12 +101,14 @@ export default NotesLogged
 
 /*
 
-{ noteEdit && 
-    <form id='EditForm' action={'/api/notes/'} method='patch' className='Testing' onSubmit={handleSubmit(Submit)}>
-        <input type='text' className='Form-Title' {...register('title')} defaultValue={noteEdit?.title}/>
-        <textarea className='Form-Text' {...register('text')} defaultValue={noteEdit?.text}/>
+<form id='EditForm' action={'/api/notes/'} method='patch' className='Testing' onSubmit={handleSubmit(Submit)}>
+    <p className='The-Title'>Edit Note</p>
+    <input id='Edit-Title' type='text' className='Form-Title' {...register('title')} defaultValue={noteEdit?.title}/>
+    <textarea id='Edit-Text' className='Form-Text' {...register('text')} defaultValue={noteEdit?.text}/>
+    <div className='Edit-Ctrl'>
         <button type='submit' form='EditForm'>Complete Edit</button>
-    </form>
-}
+        <button onClick={() => setNoteEdit(null)}>Cancel</button>
+    </div>
+</form>
 
         */
